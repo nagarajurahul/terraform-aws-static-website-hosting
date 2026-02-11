@@ -95,21 +95,40 @@ jobs:
   # Job 3: Security Scanning
   #############################################
   security-scan:
-    name: Security Scan
+    name: Terraform Security Scan (Trivy)
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run Trivy (Terraform misconfiguration scan)
+      # Run Trivy and generate JSON report
+      - name: Run Trivy (JSON Report)
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          scan-type: config
+          scan-ref: .
+          format: json
+          output: trivy-report.json
+          ignore-unfixed: true
+
+      # Run Trivy and generate Table report (for logs)
+      - name: Run Trivy (Table Report)
         uses: aquasecurity/trivy-action@0.33.1
         with:
           scan-type: config
           scan-ref: .
           severity: HIGH,CRITICAL
-          exit-code: 1
+          format: table
           ignore-unfixed: true
+          exit-code: 1
+
+      # Upload artifact
+      - name: Upload Trivy JSON Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-report
+          path: trivy-report.json
 
   #############################################
   # Job 4: Terraform Docs
