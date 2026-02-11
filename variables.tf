@@ -3,3 +3,8 @@ variable "region" {
   type        = string
 
 }
+
+variable "s3_bucket_name" {
+  description = "S3 bucket name for hosting the index file"
+  type        = string
+}
