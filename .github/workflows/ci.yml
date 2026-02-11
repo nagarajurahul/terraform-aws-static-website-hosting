@@ -125,11 +125,15 @@ jobs:
       # Fail job AFTER artifact upload
       - name: Enforce Security Gate
         run: |
-          if grep -q '"Severity":"HIGH"\|"Severity":"CRITICAL"' trivy-report.json; then
-            echo "❌ High or Critical vulnerabilities found!"
+          HIGH_COUNT=$(jq '[.Results[].Misconfigurations[]? | select(.Severity=="HIGH" or .Severity=="CRITICAL")] | length' trivy-report.json)
+
+          echo "High/Critical findings: $HIGH_COUNT"
+
+          if [ "$HIGH_COUNT" -gt 0 ]; then
+            echo "❌ High or Critical misconfigurations found!"
             exit 1
           else
-            echo "✅ No High or Critical vulnerabilities found."
+            echo "✅ No High or Critical issues."
           fi
 
   #############################################
