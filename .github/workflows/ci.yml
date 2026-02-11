@@ -122,6 +122,19 @@ jobs:
           name: trivy-report
           path: trivy-report.json
 
+      # Pretty print findings in logs (table-like output)
+      - name: Print Findings in Logs
+        run: |
+          echo "========================================="
+          echo "Trivy High/Critical Findings Summary"
+          echo "========================================="
+
+          jq -r '
+            .Results[].Misconfigurations[]? 
+            | select(.Severity=="HIGH" or .Severity=="CRITICAL")
+            | "ID: \(.ID)\nSeverity: \(.Severity)\nTitle: \(.Title)\nResource: \(.CauseMetadata.Resource)\n----"
+          ' trivy-report.json
+
       # Fail job AFTER artifact upload
       - name: Enforce Security Gate
         run: |
