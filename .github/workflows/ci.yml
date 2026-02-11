@@ -102,33 +102,35 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Run Trivy and generate JSON report
+      # Run Trivy JSON Report (always succeed)
       - name: Run Trivy (JSON Report)
+        id: trivy_scan
         uses: aquasecurity/trivy-action@0.33.1
         with:
           scan-type: config
           scan-ref: .
           format: json
           output: trivy-report.json
-          ignore-unfixed: true
-
-      # Run Trivy and generate Table report (for logs)
-      - name: Run Trivy (Table Report)
-        uses: aquasecurity/trivy-action@0.33.1
-        with:
-          scan-type: config
-          scan-ref: .
           severity: HIGH,CRITICAL
-          format: table
           ignore-unfixed: true
-          exit-code: 1
+          exit-code: 0   # Never fail here
 
-      # Upload artifact
+      # Upload artifact (always runs)
       - name: Upload Trivy JSON Report
         uses: actions/upload-artifact@v4
         with:
           name: trivy-report
           path: trivy-report.json
+
+      # Fail job AFTER artifact upload
+      - name: Enforce Security Gate
+        run: |
+          if grep -q '"Severity":"HIGH"\|"Severity":"CRITICAL"' trivy-report.json; then
+            echo "❌ High or Critical vulnerabilities found!"
+            exit 1
+          else
+            echo "✅ No High or Critical vulnerabilities found."
+          fi
 
   #############################################
   # Job 4: Terraform Docs
