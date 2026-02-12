@@ -17,6 +17,7 @@ resource "aws_s3_bucket_public_access_block" "s3_bucket_public_access_block" {
   restrict_public_buckets = true
 }
 
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key
 resource "aws_kms_key" "s3_cmk" {
   description             = "Customer managed key for S3 bucket encryption"
   deletion_window_in_days = 7
@@ -27,6 +28,7 @@ resource "aws_kms_key" "s3_cmk" {
   }
 }
 
+# https://registry.terraform.io/providers/-/aws/latest/docs/resources/s3_bucket_server_side_encryption_configuration
 resource "aws_s3_bucket_server_side_encryption_configuration" "sse" {
   bucket = aws_s3_bucket.s3.id
 
