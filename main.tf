@@ -2,7 +2,7 @@
 resource "aws_s3_bucket" "s3" {
   bucket = var.s3_bucket_name
 
-  tags = merge(var.tags,{
+  tags = merge(var.tags, {
     Name = var.s3_bucket_name
   })
 }
@@ -23,7 +23,7 @@ resource "aws_kms_key" "s3_cmk" {
   deletion_window_in_days = 7
   enable_key_rotation     = true
 
-  tags = merge(var.tags,{
+  tags = merge(var.tags, {
     Name = "${var.s3_bucket_name}-cmk"
   })
 }
