@@ -2,9 +2,9 @@
 resource "aws_s3_bucket" "s3" {
   bucket = var.s3_bucket_name
 
-  tags = {
+  tags = merge(var.tags,{
     Name = var.s3_bucket_name
-  }
+  })
 }
 
 # https://registry.terraform.io/providers/-/aws/latest/docs/resources/s3_bucket_public_access_block
@@ -23,9 +23,9 @@ resource "aws_kms_key" "s3_cmk" {
   deletion_window_in_days = 7
   enable_key_rotation     = true
 
-  tags = {
+  tags = merge(var.tags,{
     Name = "${var.s3_bucket_name}-cmk"
-  }
+  })
 }
 
 # https://registry.terraform.io/providers/-/aws/latest/docs/resources/s3_bucket_server_side_encryption_configuration
