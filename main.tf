@@ -39,3 +39,12 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "sse" {
     }
   }
 }
+
+# https://registry.terraform.io/providers/-/aws/latest/docs/resources/s3_bucket_versioning
+resource "aws_s3_bucket_versioning" "s3_bucket_versioning" {
+  bucket = aws_s3_bucket.s3.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
