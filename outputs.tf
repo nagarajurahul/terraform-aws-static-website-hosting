@@ -21,3 +21,7 @@ output "cloudfront_domain_name" {
 output "cloudfront_status" {
   value = aws_cloudfront_distribution.s3_distribution.status
 }
+
+output "url" {
+  value = "https://${aws_cloudfront_distribution.s3_distribution.arn}"
+}
