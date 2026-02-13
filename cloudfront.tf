@@ -17,7 +17,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   enabled             = true
   is_ipv6_enabled     = true
   comment             = "Cloudfront distribution for s3 static website hosting"
-  default_root_object = "index.html"
+  default_root_object = var.default_root_object
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]

@@ -1,7 +1,6 @@
 variable "region" {
   description = "Specifiy region where you wanna host static website"
   type        = string
-
 }
 
 variable "s3_bucket_name" {
@@ -24,4 +23,11 @@ variable "price_class" {
   type        = string
 
   default = "PriceClass_100"
+}
+
+variable "default_root_object" {
+  description = "Specifiy file name of the default root object"
+  type = string
+
+  default = "index.html"
 }
