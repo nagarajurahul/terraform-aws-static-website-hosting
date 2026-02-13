@@ -23,3 +23,9 @@ Use default certificate from Cloudfront
 Also make sure to have least methods allowed in cloudfront behaviors (No PUT, DELETE as this is static website hosting)
 
 Keep the bucket name same as origin, and specific bucket name as origin id inside cloudfront
+
+Add S3 permission - cloudfront to access the s3 through get object
+
+Add missing permission - Enable Cloudfront to access KMS Key to decrypt the bucket and its objects
+
+Add output variables
