@@ -22,9 +22,7 @@ data "aws_iam_policy_document" "origin_bucket_policy" {
     condition {
       test     = "StringEquals"
       variable = "AWS:SourceArn"
-      values   = [""]
-      # Change to this below value, after creating resource
-      # values   = [aws_cloudfront_distribution.s3_distribution.arn]
+      values   = [aws_cloudfront_distribution.s3_distribution.arn]
     }
   }
 }
