@@ -41,7 +41,7 @@ module "static_website_hosting" {
   # Bucket name of the s3 origin for hosting static website
   # Please make sure you match with your origin name
   # In future, there will be upgrades with creating dns names and certs for the same origin name
-  s3_bucket_name = "my-static-website-hosting-by-rahul.com"
+  s3_bucket_name = "unique-my-static-website-hosting-by-your-name.com"
 
   # Tags to be attached with all resources
   tags = { "env" = "production", "purpose" = "static-website-hosting" }
