@@ -27,7 +27,7 @@ variable "price_class" {
 
 variable "default_root_object" {
   description = "Specifiy file name of the default root object"
-  type = string
+  type        = string
 
   default = "index.html"
 }
