@@ -1,3 +1,4 @@
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_access_control
 resource "aws_cloudfront_origin_access_control" "default" {
   name                              = "default-oac"
   origin_access_control_origin_type = "s3"
@@ -5,6 +6,7 @@ resource "aws_cloudfront_origin_access_control" "default" {
   signing_protocol                  = "sigv4"
 }
 
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
     domain_name              = aws_s3_bucket.s3.bucket_regional_domain_name
