@@ -18,3 +18,10 @@ variable "tags" {
     "purpose" = "static-website-hosting"
   }
 }
+
+variable "price_class" {
+  description = "Price class for the cloudfront distribution"
+  type        = string
+
+  default = "PriceClass_100"
+}
