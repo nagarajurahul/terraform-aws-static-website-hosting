@@ -1,7 +1,7 @@
 data "aws_caller_identity" "current" {}
 
 resource "aws_kms_key_policy" "kms_key_policy" {
-  depends_on = [ aws_cloudfront_distribution.s3_distribution ]
+  depends_on = [aws_cloudfront_distribution.s3_distribution]
 
   key_id = aws_kms_key.s3_cmk.id
   policy = jsonencode({
