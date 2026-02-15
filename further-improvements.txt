@@ -1,0 +1,9 @@
+Create a Route 53 Zone
+Create a Route53 Record - in the Route53 zone, with the domain name and alias pointing to the domain name and hosted zone id of CloudFront
+
+Create an ACM Certificate for the domain name
+Attach the certificate inside the CloudFront certificate block
+
+Enable Logging for CloudFront to the New Logging S3 bucket (Lifecycle enabled for logging s3 bucket)
+
+Add WAF to CloudFront
