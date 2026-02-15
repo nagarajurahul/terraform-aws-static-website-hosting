@@ -1,54 +1,76 @@
 # terraform-aws-static-website-hosting
-terraform-aws-static-website-hosting
 
-S3 will be private
-No public access enabled
-Object versioning enabled
-Encrypt bucket with SSE-KMS CMK 
+A production-ready Terraform module to deploy a **secure static website** using:
 
-Upload index.html for testing, but need to be done in CI/CD for best practices
+- Amazon S3 (Private)
+- Amazon CloudFront (HTTPS)
+- Origin Access Control (OAC)
+- SSE-KMS with Customer Managed Key (CMK)
+- Least-Privilege IAM Policies
 
-Add S3 permissions - to make sure with least privilege
-Only Specific Cloudfront with ARN will be able to access this specific bucket using Bucket ARN inside policy
+This module follows modern AWS security best practices and is suitable for production-grade environments.
 
-Will be using Origin Access Control (OAC) as a modern approach for connecting from Cloudfront to S3
-This will be more secure than ACL
+---
 
-Define price class in variables
+## 🚀 Features
 
-Whitelist only these regions, best production method
+- 🔒 Private S3 bucket (no public access)
+- 🔐 SSE-KMS encryption using Customer Managed Key
+- 📦 Object versioning enabled
+- 🌐 CloudFront distribution with HTTPS
+- 🛡 Origin Access Control (OAC) — modern replacement for OAI
+- 🔑 Least-privilege S3 bucket policy scoped to CloudFront ARN
+- 🔑 KMS policy scoped to CloudFront distribution
+- 🌍 Geo restriction (whitelist: US, CA)
+- ⚡ Minimal HTTP methods (GET, HEAD only)
+- 📤 Useful output variables
 
-Use default certificate from Cloudfront
+---
 
-Also make sure to have least methods allowed in cloudfront behaviors (No PUT, DELETE as this is static website hosting)
+## 🏗 Architecture
 
-Keep the bucket name same as origin, and specific bucket name as origin id inside cloudfront
+---
 
-Add S3 permission - cloudfront to access the s3 through get object
+## 🔐 Security Design
 
-Add missing permission - Enable Cloudfront to access KMS Key to decrypt the bucket and its objects
+### S3
 
-Add output variables
+- Public access fully blocked
+- Versioning enabled
+- Encrypted with SSE-KMS (Customer Managed Key)
+- Bucket policy restricted to specific CloudFront distribution
 
-added explcit dependency of policy resources on resources
+### CloudFront
 
-Usage
-```
+- HTTPS enforced (`redirect-to-https`)
+- Only GET and HEAD methods allowed
+- Uses Origin Access Control (OAC)
+- Default CloudFront certificate
+- Geo restriction whitelist
+
+### KMS
+
+- Customer-managed key
+- Key rotation enabled
+- Access restricted using `AWS:SourceArn` condition
+
+---
+
+## 📦 Module Usage
+
+```hcl
 module "static_website_hosting" {
   source = "git::https://github.com/nagarajurahul/terraform-aws-static-website-hosting.git?ref=v0.0.1"
 
-  # Region to host the static website
   region = "us-east-2"
 
-  # Bucket name of the s3 origin for hosting static website
-  # Please make sure you match with your origin name
-  # In future, there will be upgrades with creating dns names and certs for the same origin name
   s3_bucket_name = "unique-my-static-website-hosting-by-your-name.com"
 
-  # Tags to be attached with all resources
-  tags = { "env" = "production", "purpose" = "static-website-hosting" }
+  tags = {
+    env     = "production"
+    purpose = "static-website-hosting"
+  }
 
-  # Default root object for home page
   default_root_object = "index.html"
 }
 ```
