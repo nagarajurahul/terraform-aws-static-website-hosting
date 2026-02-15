@@ -16,7 +16,7 @@ This module follows modern AWS security best practices and is suitable for produ
 
 ```hcl
 module "static_website_hosting" {
-  source = "git::https://github.com/nagarajurahul/terraform-aws-static-website-hosting.git?ref=v0.0.1"
+  source = "git::https://github.com/nagarajurahul/terraform-aws-static-website-hosting.git?ref=v1.0.0"
 
   region = "us-east-2"
 
