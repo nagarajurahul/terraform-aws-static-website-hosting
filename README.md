@@ -30,6 +30,8 @@ Add missing permission - Enable Cloudfront to access KMS Key to decrypt the buck
 
 Add output variables
 
+added explcit dependency of policy resources on resources
+
 Usage
 ```
 module "static_website_hosting" {
