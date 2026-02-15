@@ -12,6 +12,27 @@ This module follows modern AWS security best practices and is suitable for produ
 
 ---
 
+## 📦 Module Usage
+
+```hcl
+module "static_website_hosting" {
+  source = "git::https://github.com/nagarajurahul/terraform-aws-static-website-hosting.git?ref=v0.0.1"
+
+  region = "us-east-2"
+
+  s3_bucket_name = "unique-my-static-website-hosting-by-your-name.com"
+
+  tags = {
+    env     = "production"
+    purpose = "static-website-hosting"
+  }
+
+  default_root_object = "index.html"
+}
+```
+
+---
+
 ## 🚀 Features
 
 - 🔒 Private S3 bucket (no public access)
@@ -56,21 +77,3 @@ This module follows modern AWS security best practices and is suitable for produ
 
 ---
 
-## 📦 Module Usage
-
-```hcl
-module "static_website_hosting" {
-  source = "git::https://github.com/nagarajurahul/terraform-aws-static-website-hosting.git?ref=v0.0.1"
-
-  region = "us-east-2"
-
-  s3_bucket_name = "unique-my-static-website-hosting-by-your-name.com"
-
-  tags = {
-    env     = "production"
-    purpose = "static-website-hosting"
-  }
-
-  default_root_object = "index.html"
-}
-```
